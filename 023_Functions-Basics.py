@@ -107,30 +107,41 @@
 
 ## Universal
 
-def add1(a, b):
-    return a+b
+# def add1(a, b):
+#     return a+b
 
-def add2(a, b, c):
-    return a+b+c
+# def add2(a, b, c):
+#     return a+b+c
 
-def add3(*, a, b, c):
-    return a+b+c
-
-
-def Method(*varArgs, **kwArgs):
-    print(f"\n{varArgs=}\n{kwArgs=}")
-    return add3(*varArgs, **kwArgs)
+# def add3(*, a, b, c):
+#     return a+b+c
 
 
-#region
-# Method()
-# Method(1, 2, 3)
-# Method(a=1, b=2, c=3)
-# Method(1, 2, 3, a=1, b=2, c=3)
-# Method(1, 2, a=1, b=2, c=3, 3)
+# def Method(*varArgs, **kwArgs):
+#     print(f"\n{varArgs=}\n{kwArgs=}")
+#     return add3(*varArgs, **kwArgs)
+
+
+# #region
+# # Method()
+# # Method(1, 2, 3)
+# # Method(a=1, b=2, c=3)
+# # Method(1, 2, 3, a=1, b=2, c=3)
+# # Method(1, 2, a=1, b=2, c=3, 3)
+# #endregion
+
+# print(Method(a=1, b=2, c=3))
+
 #endregion
 
-print(Method(a=1, b=2, c=3))
+#region Special arguments
+
+def Method(a, b, /, c, d, *, e, f):
+    pass
+
+Method(1, 2, 3, d=4, e=5, f=6)
+Method()
+
+
 
 #endregion
-

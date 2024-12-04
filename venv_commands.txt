@@ -1,0 +1,35 @@
+  570  which py
+  571  /c/Users/ramak/AppData/Local/Programs/Python/Python311/python --version
+  572  /c/Users/ramak/AppData/Local/Programs/Python/Python311/python 024_MethodOverloading.py 
+  573  py --version
+  574  py -m venv .env-overloading
+  575  pip list
+  576  ll .env-overloading/Scripts/activate
+  577  source .env-overloading/Scripts/activate
+  578  py --version
+  579  pip list
+  580  deactivate
+  581  /c/Users/ramak/AppData/Local/Programs/Python/Python311/python -m venv .env-Py311
+  582  source .env-Py311/Scripts/activate
+  583  py --version
+  584  pip list
+  585  py -m pip install --upgrade pip
+  586  pip list
+  587  pip install multipledispatch
+  588  pip list
+  589  pip install django==4.0
+  590  pip list
+  591  deactivate
+  592  source .env-overloading/Scripts/activate
+  593  pip list
+  594  pip install django==5.0
+  595  deactivate
+  596  py -m venv .env-new
+  597  source .env-new/Scripts/activate
+  598  pip install -r requirements.txt 
+  599  pip list
+  600  pip install django==5.0
+  601  pip list
+  602  pip freeze
+  603  pip freeze > req_current.txt
+
