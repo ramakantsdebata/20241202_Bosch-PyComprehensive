@@ -28,7 +28,7 @@
 #     __next__()
 
 # All iterators can act as iterables
-# CAlling iter() on an iterator will return itself
+# Calling iter() on an iterator will return itself
 
 # lst = [1, 2, 3, 4]
 # it = iter(lst)          # Returns an iterator for the list
@@ -42,10 +42,17 @@
 #endregion
 
 def FibGen(n):
-    pass
+    """Generator function for Fibonacci numbers"""
+    a, b = 0, 1
+    for _ in range(n):
+        if a < n:
+            yield a
+        else:
+            break
+        a, b = b, a+b
 
 def Main():
-    it = FibGen(10)
+    it = FibGen(100)
 
     for val in it:
         print(val, end=", ")
