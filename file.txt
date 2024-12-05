@@ -1,3 +1,0 @@
-['032_SysOsModules.py', '1']
-This is a binary operation, requiring 2 argument.Error
-Result=-1

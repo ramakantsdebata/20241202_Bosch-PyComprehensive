@@ -1,1 +1,0 @@
-This is a binary operation, requiring 2 argument.
