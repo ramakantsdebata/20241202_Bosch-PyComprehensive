@@ -1,0 +1,43 @@
+Assignment 1: Create and Use a Custom Utility Module
+
+Objective: Practice creating a custom module and using it in a script.
+
+    Task:
+        Create a module named string_utils.py with the following functions:
+            count_vowels(s: str) -> int: Counts and returns the number of vowels in a string.
+            reverse_words(s: str) -> str: Reverses the order of words in a string.
+            is_palindrome(s: str) -> bool: Checks if a string is a palindrome (ignoring case and spaces).
+        Create a script main.py that:
+            Imports the string_utils module.
+            Takes user input for a string.
+            Calls each function from the string_utils module and displays the results.
+
+    Deliverables:
+        Submit the string_utils.py and main.py files.
+        Include screenshots of at least 3 test cases with their results.
+
+
+
+
+Assignment 2: Understanding __all__ and __name__
+
+Objective: Understand how to control module exports and behavior with __all__ and __name__.
+
+    Task:
+        Create a module named date_utils.py with the following functions:
+            get_today() -> str: Returns the current date in YYYY-MM-DD format.
+            get_day_of_week() -> str: Returns the current day of the week.
+            is_leap_year(year: int) -> bool: Checks if a given year is a leap year.
+        Use __all__ to allow importing only get_today and get_day_of_week functions by default.
+        Add a block under if __name__ == "__main__": to:
+            Print the result of calling all three functions.
+            Prevent this block from running if the module is imported elsewhere.
+        Create a script date_demo.py that:
+            Imports the date_utils module.
+            Tries to call all three functions. Observe and explain which ones are accessible by default.
+
+    Deliverables:
+        Submit the date_utils.py and date_demo.py files.
+        Provide explanations for:
+            Why only some functions are accessible when using from date_utils import *.
+            Why the block under if __name__ == "__main__": doesn't execute when importing the module.
