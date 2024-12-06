@@ -21,4 +21,4 @@
 * [Lexical Analysis](https://docs.python.org/3/reference/lexical_analysis.html)
     * [Escape Sequence](https://docs.python.org/3/reference/lexical_analysis.html)
     * [Format Specifiers](https://docs.python.org/3/reference/lexical_analysis.html)
-    
+* [Exception Hieirarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy)
