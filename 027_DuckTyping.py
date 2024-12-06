@@ -8,7 +8,7 @@ class Shape:
     def Peri(self):
         pass
 
-class Rhombus:
+class Rhombus(Shape):
     pass
 
 class Square(Rhombus):
@@ -17,6 +17,7 @@ class Square(Rhombus):
         self.side = side
 
     def Draw(self):
+        super().Draw()
         print("Drawing a square...")
 
     def Area(self):
@@ -24,9 +25,12 @@ class Square(Rhombus):
 
     def Peri(self):
         return 4 * self.side
+    
+    def GetDiagLen(self):
+        return 100
 
 
-class Circle:
+class Circle(Shape):
     def __init__(self, radius) -> None:
         super().__init__()
         self.radius = radius
@@ -47,7 +51,7 @@ def PrintArea(sh:Shape):
     area = sh.Area()
     print(f"{sh.__class__.__name__} --> {area}")
 
-if __name__ == "__main__":
+def Test1():
     sh = Shape()
     sq = Square(10)
     cr = Circle(10)
@@ -57,3 +61,10 @@ if __name__ == "__main__":
     PrintArea(cr)
 
 
+def Test2():
+    ref:Shape = Square(10)
+    
+    print(ref.GetDiagLen())
+
+if __name__ == "__main__":
+    Test2()
