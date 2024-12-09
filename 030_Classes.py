@@ -21,6 +21,9 @@ class Car:
 
         self.lastServiceDate = 0
 
+    def __del__(self):
+        print(f"Deleting the object [{self.__class__.__name__} at {id(self)}]")
+        Car.carCounter -= 1
 
     def __str__(self):
         return f"{self.make}, {self.model}, {self.year}, {self.__color}, {self.__velocity}"
@@ -30,7 +33,7 @@ class Car:
     
     @classmethod
     def GetCarCount(cls):
-        print(">>>", cls)
+        # print(">>>", cls)
         return cls.carCounter
 
     @staticmethod
@@ -108,8 +111,8 @@ class Car:
 ##----------------------------------------------------------------------------------
 
 class GearedCar(Car):
-    def __init__(self, gears, make, model, year, color):
-        super().__init__(make, model, year, color)
+    def __init__(self, gears, *vArgs, **kwArgs):
+        super().__init__(*vArgs, **kwArgs)
         self.gears = gears
         self.gearState = 0
 
@@ -236,6 +239,42 @@ def Test6():
     else:
         print(f"{c2.Color}-{c2.Model} is better than {c1.Color}-{c1.Model}")
 
+def Test7():
+    c1 = GearedCar(5, "Honda", "Accord", 2024, "Black")
+    c2 = GearedCar(7, "Toyota", "Camry", 2023, "Yellow")
+    c3 = GearedCar(5, "Hyundai", "Accent", 2023, "Yellow")
+
+
+    print(Car.GetCarCount())
+
+    del c1
+
+    print(Car.GetCarCount())
+
+def Test8():
+    c1 = GearedCar(5, "Honda", "Accord", 2024, "Black")
+    for member in dir(c1):
+        print(member)
+
+    print("\n" + "*"* 40 + "\n")
+
+    for member in c1.__dict__:
+        print(member)
+
+def Test9():
+    c1 = GearedCar(5, "Honda", "Accord", 2024, "Black")
+    for member in c1.__dict__:
+        print(member)
+
+    print("\n" + "*"* 40 + "\n")
+
+    del c1.chasisNo
+    # del c1.__dict__["chasisNo"]
+
+    c1.newAttrib = "SomeState"
+    for member in c1.__dict__:
+        print(member)
+
 
 if __name__ == "__main__":
-    Test6()
+    Test9()
