@@ -61,3 +61,6 @@
     * [Escape Sequence](https://docs.python.org/3/reference/lexical_analysis.html)
     * [Format Specifiers](https://docs.python.org/3/reference/lexical_analysis.html)
 * [Exception Hieirarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy)
+
+## Operational
+* [Training Feedback](https://forms.gle/P1t12HHh1LSehpft9)
