@@ -14,3 +14,45 @@ Tasks:
     Use exception handling to:
         Handle file-related errors (e.g., file not found).
         Validate numeric inputs (e.g., price, file size).
+
+================================================================================================
+
+
+Expand the Book and EBook classes with advanced object-oriented programming concepts, including properties, operator overloading, and static/class methods.
+Assignment Details
+
+    Base Classes from Assignment 4:
+        Retain the Book and EBook classes with their attributes and display methods.
+        Continue to support user input to populate these classes and file I/O to store/retrieve data.
+
+Tasks to Implement:
+1. Properties
+
+    Add properties for validation and encapsulation:
+        In Book:
+            price property:
+                Getter: Returns the price.
+                Setter: Ensures the price is non-negative.
+        In EBook:
+            file_size property:
+                Getter: Returns the file size.
+                Setter: Ensures the file size is positive.
+
+2. Operator Overloading
+
+    Add support for:
+        Equality (==):
+            Two books are considered equal if their title and author are the same.
+        Addition (+):
+            Adding two books combines their prices into a new Book titled "Bundle" and authored by "Multiple Authors".
+        String Representation (str):
+            A readable string describing the book, e.g., "Book: <title> by <author>, Price: $<price>".
+
+3. Static and Class Methods
+
+    Add static and class methods:
+        Static Method:
+            is_valid_price(price) to validate a price without needing an object instance.
+        Class Method:
+            from_dict(cls, data_dict):
+                Accepts a dictionary representing a book and returns an instance of Book or EBook, depending on the dictionary content.
