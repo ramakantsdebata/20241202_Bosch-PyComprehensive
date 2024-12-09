@@ -1,5 +1,5 @@
 class CustPointType:
-    __slots__ = ["x", "y"]
+    __slots__ = ['x', 'y']
 
     def __init__(self, a, b):
         self.x = a
@@ -10,5 +10,16 @@ class CustPointType:
     
 p1 = CustPointType(1, 2)
 print(p1)
-del p1.x
-print(p1)
+
+try:
+    p1.z = 3        # Can't add attributes
+except AttributeError as ex:
+    print(f"EXCEPTION --> {ex!r}")
+
+
+try:
+    del p1.x
+except AttributeError as ex:
+    print(f"EXCEPTION --> {ex!r}")
+
+# print(p1)
