@@ -26,7 +26,7 @@ class Car:
         return f"{self.make}, {self.model}, {self.year}, {self.__color}, {self.__velocity}"
     
     def __repr__(self):
-        return f"[{Car.carCounter}] {self.make}, {self.model}, {self.year}, {self.__color}, [{self.chasisNo}], [Serviced on {self.lastServiceDate}]"
+        return f"[{Car.carCounter}] {self.make}, {self.model}, {self.year}, {self.__color}, [{self.chasisNo}], [Serviced on {self.lastServiceDate}], {self.bRunning=}"
     
     @classmethod
     def GetCarCount(cls):
@@ -83,13 +83,17 @@ class Car:
 
     @property
     def Color(self):
-        return "Color is " + self.__color
+        return self.__color
     
     @Color.setter
     def Color(self, color):
         print(f"Setting color to {color} ...")
         self.__color = color
 
+    @property
+    def Model(self):
+        return self.model
+    
     @property
     def ServiceDate(self):
         # pass
@@ -104,7 +108,35 @@ class Car:
 ##----------------------------------------------------------------------------------
 
 class GearedCar(Car):
-    pass
+    def __init__(self, gears, make, model, year, color):
+        super().__init__(make, model, year, color)
+        self.gears = gears
+        self.gearState = 0
+
+    # def ShiftUp(self, value):
+    #     self.gearState = value
+
+    # def ShiftDown(self, value):
+    #     self.gearState = value
+
+    @property
+    def GearState(self):
+        raise NotImplemented
+    
+    @GearState.setter
+    def GearState(self, value):
+        if value < 0 or value > self.gears:
+            raise ValueError(f"Car has only {self.gears} gears.")
+        
+        self.gearState = value
+
+    def Stop(self):
+        if self.gearState != 0:
+            raise ValueError("Gear should be in neutral (0) before stopping the car.")
+        super().Stop()
+
+    def __gt__(self, other):
+        return self.gears > other.gears
 
 ###############################################################
 
@@ -184,7 +216,26 @@ def Test4():
     print(repr(c1))
     # print(c1.ServiceDate)
 
+def Test5():
+    c1 = GearedCar(5, "Honda", "Accord", 2024, "Black")
+    c2 = GearedCar(7, "Toyota", "Camry", 2023, "Yellow")
+
+    c1.Start()
+    c1.GearState = 3
+    c1.GearState = 0
+    c1.Stop()
+    print(repr(c1))
+
+def Test6():
+    c1 = GearedCar(5, "Honda", "Accord", 2024, "Black")
+    c2 = GearedCar(7, "Toyota", "Camry", 2023, "Yellow")
+
+    # if c1 > c2:
+    if c1.__gt__(c2):
+        print(f"{c1.Color}-{c1.Model} is better than {c2.Color}-{c2.Model}")
+    else:
+        print(f"{c2.Color}-{c2.Model} is better than {c1.Color}-{c1.Model}")
 
 
 if __name__ == "__main__":
-    Test4()
+    Test6()

@@ -1,0 +1,16 @@
+Objective: Implement classes, exception handling, and file management.
+Tasks:
+
+    Create a class Book with:
+        Attributes: title, author, price.
+        A method display to print the details.
+    Create a subclass EBook that:
+        Adds an attribute file_size (in MB).
+        Overrides display to include file size.
+    Write a program that:
+        Accepts details of books from the user (title, author, price, file size for eBooks).
+        Saves the details to a text file.
+        Reads the file and creates a list of Book and EBook objects.
+    Use exception handling to:
+        Handle file-related errors (e.g., file not found).
+        Validate numeric inputs (e.g., price, file size).
