@@ -181,12 +181,12 @@ def main():
 
     print("\nCreating a stack from a list:")
     stack_from_list = MaxTypedStack.from_list([10, 20, 30], data_type=int, max_size=10)
-    ## Excercise: Investigate
+    ## Exercise: Investigation
     # Does this really create the specified type stack, or always defaults to SimpleStack?
     # Identify the cause.
     # Find the remedy
 
-    
+
     print(stack_from_list)
 
 
