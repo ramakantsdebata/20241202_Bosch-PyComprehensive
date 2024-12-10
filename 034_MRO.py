@@ -11,6 +11,9 @@ class SimpleList:
     def __len__(self):
         return len(self.__data__)
     
+    def __str__(self):
+        return f"{self.__data__}"
+    
     def __repr__(self):
         return f"[{type(self)}] --> {self.__data__!r}"
     
@@ -41,8 +44,8 @@ class IntegerList(SimpleList):
             
             try:
                 data.append(int(val))
-            except TypeError as ex:
-                raise TypeError("Only accepts integer type elements")
+            except ValueError as ex:
+                raise ValueError("Only accepts integer type elements")
             
         super().__init__(data)
     
@@ -61,6 +64,7 @@ def Test1():
     print(s1)
     s1.sort()
     print(s1)
+    print(">>", s1[1])
 
     sl1 = SortedList([10, 14, 11, 78, 45, 3])
     print(f"{sl1=}")
