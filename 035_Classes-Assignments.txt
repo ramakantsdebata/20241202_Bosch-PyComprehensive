@@ -1,0 +1,103 @@
+Assignment 1: Designing a Multi-Layered Inheritance Structure
+
+Objective:
+Create a hierarchy of classes to manage a library catalog system, incorporating the following concepts:
+
+    * Inheritance and Method Resolution Order (MRO)
+    * super() for accessing base class methods
+    * __slots__ to restrict attributes
+    * Validation with custom methods
+    * Using __del__ and __delattr__
+
+Problem Statement:
+Design a library catalog system with the following structure:
+    1. Base Class: LibraryItem
+        * Attributes: title (string), year (int).
+        * Methods:
+            * Constructor to initialize attributes.
+            * A __str__ method to display the item in the format: "Title (Year)".
+
+    2. Derived Class: Book (inherits from LibraryItem)
+        * Additional Attributes: author (string).
+        * Methods:
+            * Constructor to initialize the book details using super().
+            * A __str__ method to display: "Title by Author (Year)".
+
+    3. Derived Class: DigitalItem (inherits from LibraryItem)
+        * Additional Attributes: file_size (int in MB).
+        * Methods:
+            * Constructor to initialize details using super().
+            * Validation: File size must be non-negative.
+            * __str__ to display: "Title (Year) - File Size MB".
+
+    4. Multi-Derived Class: DigitalBook
+        * Inherits from both Book and DigitalItem.
+        * Resolves MRO to ensure __str__ uses the format: "Title by Author (Year) - File Size MB".
+        * Validate author and file_size using a _validate static method.
+
+    5. __slots__
+        * Use __slots__ in LibraryItem to restrict attributes.
+
+    6. Destruction
+        * Override __del__ to print a message when an object is deleted.
+
+    7. Operations
+        * Create a few instances of DigitalBook with valid and invalid inputs to observe behavior.
+        * Attempt to delete attributes and catch exceptions if restricted by __slots__.
+
+Deliverables:
+    * Create the class hierarchy.
+    * Validate attributes in constructors.
+    * Test with valid and invalid input data for DigitalBook.
+    * Demonstrate the use of __slots__, __del__, and super().
+
+
+
+
+Assignment 2: Custom Data Structures
+
+Objective:
+Create custom data structures using:
+    * Inheritance
+    * Operator Overloading
+    * Static and Class Methods
+    * Custom Error Handling
+    * Iterators
+
+Problem Statement:
+Design a custom stack implementation using inheritance, incorporating the following requirements:
+    1. Base Class: SimpleStack
+        * Attributes:
+            * stack (list): To store elements.
+        * Methods:
+            * push(item): Add an element.
+            * pop(): Remove the top element, raising a custom StackEmptyError if empty.
+            * __repr__: Display the stack contents.
+
+    2. Derived Class: MaxSizeStack
+        * Additional Attribute: max_size (int).
+        * Overriding Methods:
+            * push(item): Ensure stack size doesn't exceed max_size. Raise a StackFullError if full.
+
+    3. Derived Class: TypedStack
+        * Additional Attribute: data_type (type).
+        * Overriding Methods:
+            * push(item): Ensure all elements are of type data_type. Raise a TypeError if invalid.
+
+    4. Multi-Derived Class: MaxTypedStack
+        * Combines MaxSizeStack and TypedStack.
+        * Enforces both type restrictions and maximum size.
+
+    5. Features
+        * Use __slots__ to restrict attributes in the base class.
+        * Use operator overloading:
+            * + to add two stacks (merging elements).
+            * len() to get the stack size.
+        * Use class and static methods:
+            * Class Method: from_list(cls, lst) to create a stack from a list.
+            * Static Method: _validate_item(item) for type validation.
+
+Deliverables:
+    * Implement the class hierarchy with all methods.
+    * Test with valid and invalid input for MaxTypedStack.
+    * Demonstrate operator overloading and iterators to loop through the stack.

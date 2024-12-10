@@ -59,7 +59,7 @@ class IntegerList(SimpleList):
     
 ##-------------------------------------------------------------------
 
-class SortedIntegerList(SortedList, IntegerList):
+class SortedIntegerList(IntegerList, SortedList):
     def __init__(self, values):
         print(self.__class__.__bases__)
         super().__init__(values)
