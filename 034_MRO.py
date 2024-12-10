@@ -76,6 +76,9 @@ def Test1():
 
     Il1 = IntegerList([1, 2, "10", 3, 4])
     print(Il1)
+    Il1.Add(11)
+    Il1.Add("12")
+    print(f"{Il1!r}")
 
     try:
         Il2 = IntegerList([1, 2, "Ten"])
