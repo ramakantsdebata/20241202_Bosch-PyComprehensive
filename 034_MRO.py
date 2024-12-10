@@ -25,6 +25,8 @@ class SimpleList:
 
 class SortedList(SimpleList):
     def __init__(self, values):
+        # print(self.__class__.__bases__)
+        # print(SortedList.__bases__)
         super().__init__(values)
         self.sort()
     
@@ -55,7 +57,12 @@ class IntegerList(SimpleList):
         except TypeError as ex:
             raise TypeError("Only accepts integer type elements")
     
+##-------------------------------------------------------------------
 
+class SortedIntegerList(SortedList, IntegerList):
+    def __init__(self, values):
+        print(self.__class__.__bases__)
+        super().__init__(values)
 
 #############################################################
 
@@ -85,4 +92,22 @@ def Test1():
     except Exception as ex:
         print(f"{ex!r}")
 
-Test1()
+def Test2():
+    SIL1 = SortedIntegerList([18, 11, 78, 56, 19])
+    SIL1.Add(16)
+    SIL1.Add("25")
+    print(f"{SIL1.__class__.__mro__}")
+    print(f"{SIL1!r}")
+
+    # try:
+    #     SIL1.Add("Twenty")
+    # except ValueError as ex:
+    #     print(f"{ex!r}")
+
+    # try:
+    #     SIL1 = SortedIntegerList([18, 11, 78, "Thirty", 56, 19])
+    # except ValueError as ex:
+    #     print(f"{ex!r}")
+
+    
+Test2()
