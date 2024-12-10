@@ -61,6 +61,8 @@
     * [Escape Sequence](https://docs.python.org/3/reference/lexical_analysis.html)
     * [Format Specifiers](https://docs.python.org/3/reference/lexical_analysis.html)
 * [Exception Hieirarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy)
+* [pickle — Python object serialization](https://docs.python.org/3/library/pickle.html)
 
 ## Operational
 * [Training Feedback](https://forms.gle/P1t12HHh1LSehpft9)
+* [Mid-session Test](https://forms.gle/VViqBhZsN2bxtSqA6)
