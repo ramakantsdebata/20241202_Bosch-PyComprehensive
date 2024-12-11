@@ -62,6 +62,7 @@
     * [Format Specifiers](https://docs.python.org/3/reference/lexical_analysis.html)
 * [Exception Hieirarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy)
 * [pickle — Python object serialization](https://docs.python.org/3/library/pickle.html)
+* ['re' - Regular Expressions](https://docs.python.org/3/library/re.html)
 
 ## Operational
 * [Training Feedback](https://forms.gle/P1t12HHh1LSehpft9)
