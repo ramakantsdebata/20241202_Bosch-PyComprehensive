@@ -13,3 +13,17 @@ Assignments: Methods and Objects
 2. Data Redaction
     * Replace all error codes (ERR-####) with [ERROR] using re.sub.
     * Anonymize the email address by hiding the domain (e.g., replace @example.com with @hidden.com).
+
+
+Assignments: Metacharacters and Special sequences
+3. Patterns and Matching
+    Extract all numeric values, including phone numbers, dates, and order IDs.
+    Match and print:
+        Dates in the format YYYY-MM-DD.
+        File names with .txt extensions.
+
+4. Analyzing Words
+    Count the number of alphanumeric words containing underscores (_).
+    Find and print:
+        Words starting with the letter r.
+        Words ending with .pdf or .png.
