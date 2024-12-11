@@ -1,5 +1,4 @@
-subject_string = """
-John Doe: 123-456-7890 | jane_doe@example.com | Order ID: ORD-45231
+subject_string = """John Doe: 123-456-7890 | jane_doe@example.com | Order ID: ORD-45231
 Invoice Date: 2023-11-23 | Total: $1,250.00 | Website: https://example.com
 File list: report1.pdf, summary.txt, temp_report.txt, image.png
 Errors: ERR-1001, ERR-2002 (Critical), ERR-3003 (Ignored)
