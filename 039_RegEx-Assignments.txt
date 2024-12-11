@@ -17,13 +17,27 @@ Assignments: Methods and Objects
 
 Assignments: Metacharacters and Special sequences
 3. Patterns and Matching
-    Extract all numeric values, including phone numbers, dates, and order IDs.
-    Match and print:
-        Dates in the format YYYY-MM-DD.
-        File names with .txt extensions.
+    * Extract all numeric values, including phone numbers, dates, and order IDs.
+    * Match and print:
+        * Dates in the format YYYY-MM-DD.
+        * File names with .txt extensions.
 
 4. Analyzing Words
-    Count the number of alphanumeric words containing underscores (_).
-    Find and print:
-        Words starting with the letter r.
-        Words ending with .pdf or .png.
+    * Count the number of alphanumeric words containing underscores (_).
+    * Find and print:
+        * Words starting with the letter r.
+        * Words ending with .pdf or .png.
+
+
+Assignments: Extension Notations
+5. Lookaheads and Lookbehinds
+    * Extract all .txt files not starting with temp using a lookahead.
+    * Find and print:
+        * Currency values preceded by Total: using a lookbehind.
+        * All error codes (ERR-####) followed by (Critical) using a lookahead.
+
+6. Grouping and Validation
+    * Group and print phone numbers in the format <AreaCode>-<Exchange>-<LineNumber>.
+    * Validate:
+        * Phone numbers that start with the area code 123.
+        * Error codes followed by either (Critical) or (Ignored).
