@@ -98,17 +98,50 @@ string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europ
 
 
 ## Groups
-res = re.search(r".+\s(.+ex).+(\d\d.+).", string1)
-print(res)
+# res = re.search(r".+\s(.+ex).+(\d\d.+).", string1)
+# print(res)
+# print(res.groups())
+# print(res.group())
+# print(res.group(0))
+# print(res.group(1))
+# print(res.group(2))
+# print(res.group(1, 2))
+
+
+# print(res.start(1), res.end(1))
+# print(res.start(2), res.end(2))
+# print(res.span(1))
+# print(res.span(2))
+
+
+
+
+string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europe including the \nFTSE, fell by 11.48% - \nthe worst day since it launched in 1998.\nThe panic selling \nprompted by \nthe coronavirus has wiped £2.7tn off the value of STOXX 600 shares since its all-time peak on 19 February."
+
+res = re.findall(r"the", string1, re.I)
+print(len(res), res)
+
+
+res = re.findall(r"^The", string1, re.M|re.I)
+print(len(res), res)
+
+
+print(len(string1))
+res = re.fullmatch(r".{289}", string1, re.S)   #re.DOTALL)
+
+if res:
+    print(res)
+else:
+    print("FulMatch failed.")
+
+
+
+string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europe including the FTSE, fell by 11.48% - the worst day since it launched in 1998. The panic selling prompted by the coronavirus has wiped £2.7tn off the value of STOXX 600 shares since its all-time peak on 19 February."
+
+res = re.search(r""".+\s  # IGNORE: Few characters followed by a whitespace
+                (.+ex)    # >> any word ending with 'ex'
+                .+        # IGNORE: Intermediate characters to ignore
+                (\d\d.+)  # >> Date to pickup
+                .         # IGNORE: End of line character
+                """, string1, re.X)      # re.VERBOSE)
 print(res.groups())
-print(res.group())
-print(res.group(0))
-print(res.group(1))
-print(res.group(2))
-print(res.group(1, 2))
-
-
-print(res.start(1), res.end(1))
-print(res.start(2), res.end(2))
-print(res.span(1))
-print(res.span(2))
