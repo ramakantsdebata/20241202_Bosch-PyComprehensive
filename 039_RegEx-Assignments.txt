@@ -1,0 +1,16 @@
+subject_string = """
+John Doe: 123-456-7890 | jane_doe@example.com | Order ID: ORD-45231
+Invoice Date: 2023-11-23 | Total: $1,250.00 | Website: https://example.com
+File list: report1.pdf, summary.txt, temp_report.txt, image.png
+Errors: ERR-1001, ERR-2002 (Critical), ERR-3003 (Ignored)
+"""
+
+Assignments: Methods and Objects
+1. Extracting Key Information
+    * Find and print the first occurrence of a valid email address.
+    * Check if the subject string starts with a valid <FirstName> <LastName> format.
+    * Extract and print all order IDs (e.g., ORD-45231) using re.findall.
+
+2. Data Redaction
+    * Replace all error codes (ERR-####) with [ERROR] using re.sub.
+    * Anonymize the email address by hiding the domain (e.g., replace @example.com with @hidden.com).
