@@ -101,12 +101,79 @@ string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europ
 # res = re.findall(r"1[8-9][0-1][0-9]", string2)
 # print(res)
 
-res = re.findall(r"(.+?)", string1)
+# res = re.findall(r"(.+?)", string1)
+# print(res)
+
+# res = re.findall(r"[(.+?)]", string1)
+# print(res)
+
+# res = re.findall(r"[a-zA-Z1-5_]")
+
+# res = re.findall(r"[ \n\t\v\f\c]")      # All the whitespace characters
+
+
+
+## Curly Braces {} - Quantifier
+
+# res = re.findall(r"\d{2,4}", string1)
+# print(res)
+
+
+# res = re.findall(r"\w{2,4}", string1)
+# print(res)
+
+
+# res = re.findall(r"\w{3,}", string1)
+# print(res)
+
+# res = re.findall(r"\w{2,6}", string1)
+# print(res)
+
+# res = re.findall(r"\w{2,6}?", string1)
+# print(res)
+
+
+## Pipe  - Combination of conditions; First one to match returns result
+
+# # A|B|C -Whichever condition matches successfully; If more than one conditions match, sequence of conditions matters
+# res = re.search(r"\d{2}|\d{3}|\w{6}", string1)
+# print(res)
+
+
+
+
+
+## Sepcial Sequences ##########################################################
+# \A (Beginning of string) & \Z (End of string)
+# string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europe\n including the \nFTSE, fell\n by 11.48% - \nthe worst day since it launched in 1998.\nThe panic selling \nprompted by \nthe coronavirus has wiped £2.7tn off the value of STOXX 600 shares since\n its all-time peak on 19 February"
+# res = re.findall(r"\AThe", string1, re.M|re.I)
+# print(len(res), res)
+
+# res  = re.findall(r"\w+\Z", string1, re.M)
+# print(res)
+
+
+# \b (word boundary) & \B (Non-boundary)
+string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europe including the FTSE, fell by 11.48% - the worst day since it launched in 1998. The panic selling prompted by the coronavirus has wiped £2.7tn off the value of STOXX 600 shares since its all-time peak on 19 February."
+
+res = re.search(r"\b\w{2}\b", string1) 
 print(res)
 
-res = re.findall(r"[(.+?)]", string1)
+res = re.search(r"\Bcross\B", string1)
 print(res)
 
-res = re.findall(r"[a-zA-Z1-5_]")
 
-res = re.findall(r"[ \n\t\v\f\c]")      # All the whitespace characters
+# \d (digit) & \D (non-digit)
+
+res = re.findall(r"\B\d{2}\B", string1)
+print(res)
+
+
+# \s (whitespaces) & \S (Non-whitespaces)
+
+string1 = "The Euro STOXX 600 index, which tracks all stock markets across Europe\n including the \nFTSE, fell\n by 11.48% - \nthe worst day since it launched in 1998.\nThe panic selling \nprompted by \nthe coronavirus has wiped £2.7tn off the value of STOXX 600 shares since\n its all-time peak on 19 February"
+res = re.findall(r"\s", string1)
+print(res)
+
+
+# \w (alphanumeric and _)  & \W (opposite of \w)
