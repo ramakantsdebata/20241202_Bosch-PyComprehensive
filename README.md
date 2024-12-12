@@ -53,6 +53,20 @@
     *     ~ (bitwise NOT) - __invert__
     *     abs() (absolute value) - __abs__
 
+### Unit testing commands
+* py -m unittest -v _01_FixturesCmdline/tests/test_1_simpleCalcTest.py
+* py -m unittest -v _01_FixturesCmdline.tests.test_1_simpleCalcTest
+* py -m unittest -v _01_FixturesCmdline.tests.test_1_simpleCalcTest.TestSimpleCalculator_02
+* py -m unittest -v _01_FixturesCmdline.tests.test_1_simpleCalcTest.TestSimpleCalculator_02.test_SimpleMul
+* py -m _01_FixturesCmdline.tests.test_3_Suite
+* pip install parameterized
+* pytest .
+* pytest . -v
+* pytest . -v --html=report.html
+* pytest . -v --html=report.html --self-contained-html
+* pytest -v tests
+
+
 ## Links
 * [PEP 0 – Index of Python Enhancement Proposals (PEPs)](https://peps.python.org/)
 * [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
@@ -63,6 +77,8 @@
 * [Exception Hieirarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy)
 * [pickle — Python object serialization](https://docs.python.org/3/library/pickle.html)
 * ['re' - Regular Expressions](https://docs.python.org/3/library/re.html)
+* [Pytest site](https://docs.pytest.org/en/stable/index.html)
+    * [How to use unittest-based tests with pytest](https://docs.pytest.org/en/stable/how-to/unittest.html)
 
 ## Operational
 * [Training Feedback](https://forms.gle/P1t12HHh1LSehpft9)
