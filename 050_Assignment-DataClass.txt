@@ -1,0 +1,59 @@
+Problem Statement:
+Design a class hierarchy to represent a library system using data classes. Implement the following:
+
+    Base Class: LibraryItem
+        Attributes:
+            title (str)
+            author (str)
+            published_year (int)
+        Methods:
+            __str__: Return a formatted string representation of the item.
+
+    Derived Class: Book
+        Additional Attributes:
+            isbn (str)
+            pages (int)
+
+    Derived Class: Magazine
+        Additional Attributes:
+            issue (int)
+            frequency (str) (e.g., "Weekly", "Monthly").
+
+    Utility Function:
+        Create a utility function create_library_items(data: list[dict]) -> list[LibraryItem] that:
+            Accepts a list of dictionaries.
+            Instantiates objects of the appropriate class (Book or Magazine) based on the dictionary keys.
+            Returns a list of LibraryItem objects.
+
+    Testing:
+        Provide test data with a mix of books and magazines.
+        Print the objects and verify their correctness.
+
+
+
+Sample Data for Testing
+
+data = [
+    {
+        "type": "Book",
+        "title": "The Pragmatic Programmer",
+        "author": "Andy Hunt & Dave Thomas",
+        "published_year": 1999,
+        "isbn": "978-0201616224",
+        "pages": 352,
+    },
+    {
+        "type": "Magazine",
+        "title": "National Geographic",
+        "author": "Various",
+        "published_year": 2023,
+        "issue": 195,
+        "frequency": "Monthly",
+    },
+]
+
+Deliverables:
+
+    Implement the LibraryItem, Book, and Magazine classes using dataclasses.
+    Write the utility function create_library_items.
+    Provide test cases to validate the functionality.
