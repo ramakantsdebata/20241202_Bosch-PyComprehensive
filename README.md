@@ -79,6 +79,7 @@
 * ['re' - Regular Expressions](https://docs.python.org/3/library/re.html)
 * [Pytest site](https://docs.pytest.org/en/stable/index.html)
     * [How to use unittest-based tests with pytest](https://docs.pytest.org/en/stable/how-to/unittest.html)
+* [Pydantic](https://docs.pydantic.dev/latest/)
 
 ## Operational
 * [Training Feedback](https://forms.gle/P1t12HHh1LSehpft9)
