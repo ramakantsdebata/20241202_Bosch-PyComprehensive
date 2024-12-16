@@ -22,9 +22,6 @@ from schemas import save_lib
 # db = load_lib()
 
 
-app = FastAPI(title="Car Sharing App", description="An app to share cars.")
-
-
 engine = create_engine(
     "sqllite:///carsharing.db",
     connect_args={"check_same_thread": False},
@@ -36,12 +33,15 @@ engine = create_engine(
 async def lifespan(app:FastAPI):
     # Create data table as per the specification in the schema
     SQLModel.metadata.create_all(engine)
-    
+
     # Execute the app
     yield
 
     # Task to wind up
     print("That's all folks!")
+
+app = FastAPI(title="Car Sharing App", description="An app to share cars.", lifespan=lifespan)
+
 
 
 
