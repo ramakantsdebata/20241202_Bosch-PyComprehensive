@@ -34,7 +34,7 @@ def get_cars(size: str|None = None, doors: int|None = None)->list[CarOutput]:
     return cars
 
 @app.get("/api/cars/{id}")
-def get_cars(id: int)->CarInput:
+def get_car_by_id(id: int)->CarInput:
     """Returns a car matching the provided 'id' from the server records"""
     result = [car for car in db if car.id == id]
     if result:
