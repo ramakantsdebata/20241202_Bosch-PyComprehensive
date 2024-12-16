@@ -16,6 +16,7 @@ import sys
 from schemas import CarDbModel, CarInput
 from schemas import CarOutput
 from schemas import TripInput, TripOutput
+from schemas import TripDbModel
 from schemas import load_lib
 from schemas import save_lib
 
@@ -50,7 +51,7 @@ def get_session():
 
 
 @app.get("/api/cars")
-def get_cars(size: str|None = None, doors: int|None = None, session: Session = Depends(get_session))->list[CarOutput]:
+def get_cars(size: str|None = None, doors: int|None = None, session: Session = Depends(get_session))->list[CarOutput]:  #->list[CarDbModel]:   #
     """Returns a list of cars from the server records"""
     query = select(CarDbModel)
     if size:
@@ -67,7 +68,7 @@ def get_cars(size: str|None = None, doors: int|None = None, session: Session = D
 
 
 @app.get("/api/cars/{id}")
-def get_car_by_id(id: int, session: Session = Depends(get_session))->CarOutput:
+def get_car_by_id(id: int, session: Session = Depends(get_session))->CarOutput:         # ->list[CarDbModel]:   #
     """Returns a car matching the provided 'id' from the server records"""
     car = session.get(CarDbModel, id)
     if car:
@@ -118,14 +119,13 @@ def change_car(id: int, new_data: CarInput, session: Session = Depends(get_sessi
 
 # Add trip to an existing Car object
 @app.post("/api/cars/{id}/trips", response_model=TripOutput)
-def add_trip(car_id: int, trip: TripInput) -> TripOutput:
-    matches = [car for car in db if car.id == car_id]
-    if matches:
-        car = matches[0]
-        new_trip = TripOutput(start=trip.start, end=trip.end,
-                              description=trip.description, id=len(car.trips)+1)
+def add_trip(car_id: int, trip: TripInput, session: Session = Depends(get_session)) -> TripOutput:
+    car = session.get(CarDbModel, id)
+    if car:
+        new_trip = TripDbModel.model_validate(trip, update={'car_id': car.id, 'id': None})
         car.trips.append(new_trip)
-        save_lib(db)
+        session.commit()
+        session.refresh(new_trip)
         return new_trip
     else:
         raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
@@ -147,11 +147,21 @@ def remove_trip(car_id: int, trip_id:int) -> None:
 
 @app.post("/api/cars/migrate")
 def migrate_data_to_db(session: Session = Depends(get_session)) -> list[CarOutput]:
+    lstCars = []
     for car in db:
-        new_car = CarDbModel.model_validate(car)
+        new_car = CarDbModel.model_validate(car, update={'trips': []})
         session.add(new_car)
-    session.commit()
-    return db
+
+        session.commit()
+
+        session.refresh(new_car)
+        for trip in car.trips:
+            new_trip = TripDbModel.model_validate(trip, update={'car_id': new_car.id, 'id': None})
+            session.add(new_trip)
+            session.commit()
+            session.refresh(new_car)
+        lstCars.append(new_car)
+    return lstCars
 
 
 
