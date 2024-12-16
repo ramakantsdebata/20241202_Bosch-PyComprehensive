@@ -1,8 +1,10 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from fastapi.responses import FileResponse
 from fastapi import HTTPException
 from datetime import datetime
 import os
+from sqlmodel import SQLModel, create_engine
 
 import uvicorn
 
@@ -17,10 +19,31 @@ from schemas import load_lib
 from schemas import save_lib
 
 
-db = load_lib()
+# db = load_lib()
 
 
 app = FastAPI(title="Car Sharing App", description="An app to share cars.")
+
+
+engine = create_engine(
+    "sqllite:///carsharing.db",
+    connect_args={"check_same_thread": False},
+    echo=True
+)
+
+
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    # Create data table as per the specification in the schema
+    SQLModel.metadata.create_all(engine)
+    
+    # Execute the app
+    yield
+
+    # Task to wind up
+    print("That's all folks!")
+
+
 
 @app.get("/api/cars")
 def get_cars(size: str|None = None, doors: int|None = None)->list[CarOutput]:
