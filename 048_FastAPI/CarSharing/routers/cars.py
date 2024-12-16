@@ -47,7 +47,6 @@ def get_car_by_id(id: int, session: Session = Depends(get_session))->CarOutput: 
         raise HTTPException(status_code=404, detail=f"No car with id {id} found on the server.")
 
 
-# 5. In add_car(), depend on the get_current_user(), to ensure authenticated access.
 @router.post("/", response_model=CarOutput)
 def add_car(car: CarInput, session: Session = Depends(get_session),
             user: User_DBModel = Depends(get_current_user)) -> CarOutput:
