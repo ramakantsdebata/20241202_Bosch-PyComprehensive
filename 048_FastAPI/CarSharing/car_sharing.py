@@ -1,10 +1,13 @@
 from fastapi import FastAPI
+from fastapi import Request
 from fastapi.responses import FileResponse
 
 from contextlib import asynccontextmanager
 from sqlmodel import SQLModel
 import uvicorn
 
+from starlette.responses import JSONResponse
+from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 from db import engine
 
@@ -13,6 +16,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from routers import cars
 from routers import web
+from routers.cars import BadTripException
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
@@ -29,6 +33,13 @@ app = FastAPI(title="Car Sharing App", description="An app to share cars.", life
 app.include_router(cars.router)
 app.include_router(web.router)
 
+
+@app.exception_handler(BadTripException)
+async def uvicorn_exception_handler(request: Request, exc: BadTripException):
+    return JSONResponse(
+        status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+        content={"message": "Bad trip"}
+    )
 
 
 if __name__ == "__main__":
