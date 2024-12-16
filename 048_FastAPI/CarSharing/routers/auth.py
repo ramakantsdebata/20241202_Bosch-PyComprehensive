@@ -7,19 +7,10 @@ from db import get_session
 from schemas import User, User_DBModel
 
 
-# 4. Ask for credentials upon URL access, 
-# check for user presence in db,
-# and verify against the password_hash
-
-
 security = HTTPBasic()
 
 
 def get_current_user(credentials: HTTPBasicCredentials = Depends(security),
-                     # Depending on security will make FastAPI ask for username/password upon URL access
-                     # Filled in details will be sent to the server as HTTP header, 
-                     # and populate the 'credentials' object here.
-
                      session: Session = Depends(get_session)) -> User:
     
     query = select(User_DBModel).where(User_DBModel.username == credentials.username)

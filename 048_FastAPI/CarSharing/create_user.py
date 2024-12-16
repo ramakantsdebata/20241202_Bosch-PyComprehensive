@@ -1,11 +1,3 @@
-"""
-6. A convenience script to create a user.
-Will create the table in DB if not existing already
-Can NOT overwrite existing user
-create_user.py
--------------
-"""
-
 from getpass import getpass
 from sqlmodel import SQLModel, Session, create_engine
 from schemas import User_DBModel

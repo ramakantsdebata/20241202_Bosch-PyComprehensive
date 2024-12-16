@@ -12,21 +12,14 @@ class User(SQLModel):
     username: str
 
 
-# 2. Install the passlib[bcrypt] module
-# Create a pwd_context
 pwd_context = CryptContext(schemes=["bcrypt"])
 
 
-# 1. Add a User class
 class User_DBModel(SQLModel, table=True):
     id: int|None = Field(default=None, primary_key=True)
     username: str = Field(sa_column=Column("username", VARCHAR, unique=True, index=True))
-    #   * unique constraint, to prohibit duplicate username
-    #   * index, to speed up searching username
     password_hash: str = ""
-    # install passlib[bcrypt] for password hashing
 
-    # 3. Add set_password() & verify_password() methods to User_DBModel
     def set_password(self, password):
         """Setting the passwords actually sets the password_hash"""
         self.password_hash = pwd_context.hash(password)
