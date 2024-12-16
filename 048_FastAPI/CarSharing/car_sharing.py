@@ -49,7 +49,7 @@ async def favicon():
     print(path)
     return FileResponse(path)
 
-@app.post("/api/cars")
+@app.post("/api/cars", response_model=CarOutput)
 def add_car(car: CarInput) -> CarOutput:
     new_car = CarOutput(size=car.size, doors=car.doors,
                         fuel=car.fuel, transmission=car.transmission,
