@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse
 from fastapi import HTTPException
 from datetime import datetime
 import os
-from sqlmodel import SQLModel, Session, create_engine
+from sqlmodel import SQLModel, Session, create_engine, select
 
 import uvicorn
 
@@ -48,23 +48,30 @@ app = FastAPI(title="Car Sharing App", description="An app to share cars.", life
 @app.get("/api/cars")
 def get_cars(size: str|None = None, doors: int|None = None)->list[CarOutput]:
     """Returns a list of cars from the server records"""
-    cars = db
-    if size:
-        cars = [car for car in cars if car.size == size]
+    with Session(engine) as session:
+        query = select(CarDbModel)
+        if size:
+            query = query.where(CarDbModel.size == size)
+        if doors:
+            query = query.where(CarDbModel.doors == doors)
 
-    if doors:
-        cars = [car for car in cars if car.doors == doors]
+        result = session.exec(query).all()
 
-    return cars
+        if result:
+            return result
+        else:
+            raise HTTPException(status_code=404, detail=f"No car with size={size} and doors={doors}.")
+
 
 @app.get("/api/cars/{id}")
-def get_car_by_id(id: int)->CarInput:
+def get_car_by_id(id: int)->CarOutput:
     """Returns a car matching the provided 'id' from the server records"""
-    result = [car for car in db if car.id == id]
-    if result:
-        return result[0]
-    else:
-        raise HTTPException(status_code=404, detail=f"No car with id {id} found on the server.")
+    with Session(engine) as session:
+        car = session.get(CarDbModel, id)
+        if car:
+            return car
+        else:
+            raise HTTPException(status_code=404, detail=f"No car with id {id} found on the server.")
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
@@ -134,6 +141,19 @@ def remove_car(car_id: int, trip_id:int) -> None:
                     return
     else:
         raise HTTPException(status_code=404, detail=f"No car with id {car_id} found.")
+
+
+## Migrate the data from the json file to the Database ########################
+
+@app.post("/api/cars/migrate")
+def migrate_data_to_db() -> list[CarOutput]:
+    with Session(engine) as session:
+        for car in db:
+            new_car = CarDbModel.model_validate(car)
+            session.add(new_car)
+        session.commit()
+    return db
+
 
 
 if __name__ == "__main__":
