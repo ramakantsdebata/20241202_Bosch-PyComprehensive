@@ -10,7 +10,8 @@ import sys
 # sys.path.insert(0, os.path.dirname(__file__))
 # print(sys.path)
 
-from schemas import Car
+from schemas import CarInput
+from schemas import CarOutput
 from schemas import load_lib
 from schemas import save_lib
 
@@ -21,7 +22,7 @@ db = load_lib()
 app = FastAPI()
 
 @app.get("/api/cars")
-def get_cars(size: str|None = None, doors: int|None = None)->list[Car]:
+def get_cars(size: str|None = None, doors: int|None = None)->list[CarOutput]:
     """Returns a list of cars from the server records"""
     cars = db
     if size:
@@ -33,7 +34,7 @@ def get_cars(size: str|None = None, doors: int|None = None)->list[Car]:
     return cars
 
 @app.get("/api/cars/{id}")
-def get_cars(id: int)->Car:
+def get_cars(id: int)->CarInput:
     """Returns a car matching the provided 'id' from the server records"""
     result = [car for car in db if car.id == id]
     if result:
@@ -49,9 +50,13 @@ async def favicon():
     return FileResponse(path)
 
 @app.post("/api/cars")
-def add_car(car: Car):
-    db.append(car)
+def add_car(car: CarInput) -> CarOutput:
+    new_car = CarOutput(size=car.size, doors=car.doors,
+                        fuel=car.fuel, transmission=car.transmission,
+                        id=len(db)+1)
+    db.append(new_car)
     save_lib(db)
+    return new_car
 
 
 if __name__ == "__main__":
