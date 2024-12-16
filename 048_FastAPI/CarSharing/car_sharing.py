@@ -100,6 +100,18 @@ def add_trip(car_id: int, trip: TripInput) -> TripOutput:
     else:
         raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
 
+@app.delete("/api/cars/{car_id}/trips/{trip_id}", status_code=204)
+def remove_car(car_id: int, trip_id:int) -> None:
+    for car in db:
+        if car.id == car_id:
+            for trip in car.trips:
+                if trip.id == trip_id:
+                    car.trips.remove(trip)
+                    save_lib(db)
+                    return
+    else:
+        raise HTTPException(status_code=404, detail=f"No car with id {car_id} found.")
+
 
 if __name__ == "__main__":
     uvicorn.run("car_sharing:app", reload=True)
