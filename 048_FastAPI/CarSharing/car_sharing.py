@@ -20,7 +20,7 @@ from schemas import save_lib
 db = load_lib()
 
 
-app = FastAPI()
+app = FastAPI(title="Car Sharing App", description="An app to share cars.")
 
 @app.get("/api/cars")
 def get_cars(size: str|None = None, doors: int|None = None)->list[CarOutput]:

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic import ConfigDict
 import json
 import os
 
@@ -17,6 +18,16 @@ class CarInput(BaseModel):
     fuel: str = "electric"
     doors: int
     transmission: str = "auto"
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "size": "Postman-size",
+                "fuel": "tesla-battery",
+                "doors": 5,
+                "transmission":"automatic"
+            }
+        }
+    )
 
 class CarOutput(CarInput):
     id: int
