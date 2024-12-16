@@ -59,5 +59,18 @@ def add_car(car: CarInput) -> CarOutput:
     return new_car
 
 
+@app.delete("/api/cars/{id}", status_code=204)
+def remove_car(id: int) -> None:
+    matches = [car for car in db if car.id == id]
+    if matches:
+        car = matches[0]
+        db.remove(car)
+        save_lib(db)
+    else:
+        raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
+
+## Modify the preexisting object of Car 
+
+
 if __name__ == "__main__":
     uvicorn.run("car_sharing:app", reload=True)
