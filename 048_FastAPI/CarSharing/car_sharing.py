@@ -12,6 +12,7 @@ import sys
 
 from schemas import CarInput
 from schemas import CarOutput
+from schemas import TripInput, TripOutput
 from schemas import load_lib
 from schemas import save_lib
 
@@ -83,6 +84,22 @@ def change_car(id: int, new_data: CarInput) -> CarOutput:
         return car
     else:
         raise HTTPException(status_code=404, detail=f"No car with id={id}.")
+
+
+# Add trip to an existing Car object
+@app.post("/api/cars/{id}/trips", response_model=TripOutput)
+def add_trip(car_id: int, trip: TripInput) -> TripOutput:
+    matches = [car for car in db if car.id == car_id]
+    if matches:
+        car = matches[0]
+        new_trip = TripOutput(start=trip.start, end=trip.end,
+                              description=trip.description, id=len(car.trips)+1)
+        car.trips.append(new_trip)
+        save_lib(db)
+        return new_trip
+    else:
+        raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
+
 
 if __name__ == "__main__":
     uvicorn.run("car_sharing:app", reload=True)
