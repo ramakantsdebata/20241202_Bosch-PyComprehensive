@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse
 from fastapi import HTTPException
 from datetime import datetime
 import os
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import SQLModel, Session, create_engine
 
 import uvicorn
 
@@ -12,18 +12,18 @@ import sys
 # sys.path.insert(0, os.path.dirname(__file__))
 # print(sys.path)
 
-from schemas import CarInput
+from schemas import CarDbModel, CarInput
 from schemas import CarOutput
 from schemas import TripInput, TripOutput
 from schemas import load_lib
 from schemas import save_lib
 
 
-# db = load_lib()
+db = load_lib()
 
 
 engine = create_engine(
-    "sqllite:///carsharing.db",
+    "sqlite:///carsharing.db",
     connect_args={"check_same_thread": False},
     echo=True
 )
@@ -75,11 +75,11 @@ async def favicon():
 
 @app.post("/api/cars", response_model=CarOutput)
 def add_car(car: CarInput) -> CarOutput:
-    new_car = CarOutput(size=car.size, doors=car.doors,
-                        fuel=car.fuel, transmission=car.transmission,
-                        id=len(db)+1)
-    db.append(new_car)
-    save_lib(db)
+    with Session(engine) as session:
+        new_car = CarDbModel.model_validate(car)
+        session.add(new_car)
+        session.commit()
+        session.refresh(new_car)
     return new_car
 
 

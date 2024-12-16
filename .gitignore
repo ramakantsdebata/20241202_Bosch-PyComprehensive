@@ -167,3 +167,4 @@ cython_debug/
 updated_data.*
 report.html
 assets
+carsharing.db
