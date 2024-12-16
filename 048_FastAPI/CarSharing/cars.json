@@ -4,7 +4,27 @@
         "fuel": "petrol",
         "doors": 3,
         "transmission": "auto",
-        "id": 1
+        "id": 1,
+        "trips": [
+            {
+                "start": 0,
+                "end": 5,
+                "description": "Koramangala",
+                "id": 1
+            },
+            {
+                "start": 5,
+                "end": 10,
+                "description": "Adugodi",
+                "id": 2
+            },
+            {
+                "start": 10,
+                "end": 15,
+                "description": "Varthur",
+                "id": 3
+            }
+        ]
     },
     {
         "size": "s",
@@ -18,7 +38,21 @@
         "fuel": "petrol",
         "doors": 5,
         "transmission": "manual",
-        "id": 3
+        "id": 3,
+        "trips": [
+            {
+                "start": 0,
+                "end": 10,
+                "description": "Groceries",
+                "id": 1
+            },
+            {
+                "start": 10,
+                "end": 20,
+                "description": "Medical",
+                "id": 2
+            }
+        ]
     },
     {
         "size": "m",
@@ -46,7 +80,27 @@
         "fuel": "disel",
         "doors": 5,
         "transmission": "manual",
-        "id": 7
+        "id": 7,
+        "trips": [
+            {
+                "start": 0,
+                "end": 200,
+                "description": "Chennai",
+                "id": 1
+            },
+            {
+                "start": 200,
+                "end": 400,
+                "description": "Pune",
+                "id": 2
+            },
+            {
+                "start": 400,
+                "end": 550,
+                "description": "Mumbai",
+                "id": 3
+            }
+        ]
     },
     {
         "size": "l",
