@@ -118,9 +118,9 @@ def change_car(id: int, new_data: CarInput, session: Session = Depends(get_sessi
 
 
 # Add trip to an existing Car object
-@app.post("/api/cars/{id}/trips", response_model=TripOutput)
+@app.post("/api/cars/{car_id}/trips", response_model=TripOutput)
 def add_trip(car_id: int, trip: TripInput, session: Session = Depends(get_session)) -> TripOutput:
-    car = session.get(CarDbModel, id)
+    car = session.get(CarDbModel, car_id)
     if car:
         new_trip = TripDbModel.model_validate(trip, update={'car_id': car.id, 'id': None})
         car.trips.append(new_trip)
@@ -128,20 +128,21 @@ def add_trip(car_id: int, trip: TripInput, session: Session = Depends(get_sessio
         session.refresh(new_trip)
         return new_trip
     else:
-        raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
-
-@app.delete("/api/cars/{car_id}/trips/{trip_id}", status_code=204)
-def remove_trip(car_id: int, trip_id:int) -> None:
-    for car in db:
-        if car.id == car_id:
-            for trip in car.trips:
-                if trip.id == trip_id:
-                    car.trips.remove(trip)
-                    save_lib(db)
-                    return
-    else:
         raise HTTPException(status_code=404, detail=f"No car with id {car_id} found.")
 
+@app.delete("/api/cars/{car_id}/trips/{trip_id}", status_code=204)
+def remove_trip(car_id: int, trip_id:int, session: Session = Depends(get_session)) -> None:
+    car = session.get(CarDbModel, car_id)
+    if car:
+        for trip in car.trips:
+            if trip.id == trip_id:
+                session.delete(trip)
+                session.commit()
+                return 
+        else:
+            raise HTTPException(status_code=404, detail=f"No trip with id {trip_id} found.")
+    else:
+        raise HTTPException(status_code=404, detail=f"No car with id {car_id} found.")
 
 ## Migrate the data from the json file to the Database ########################
 
