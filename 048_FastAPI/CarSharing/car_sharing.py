@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from fastapi.responses import FileResponse
 from fastapi import HTTPException
+from fastapi import Depends
 from datetime import datetime
 import os
 from sqlmodel import SQLModel, Session, create_engine, select
@@ -42,36 +43,37 @@ async def lifespan(app:FastAPI):
 
 app = FastAPI(title="Car Sharing App", description="An app to share cars.", lifespan=lifespan)
 
+def get_session():
+    with Session(engine) as session:
+        yield session
 
 
 
 @app.get("/api/cars")
-def get_cars(size: str|None = None, doors: int|None = None)->list[CarOutput]:
+def get_cars(size: str|None = None, doors: int|None = None, session: Session = Depends(get_session))->list[CarOutput]:
     """Returns a list of cars from the server records"""
-    with Session(engine) as session:
-        query = select(CarDbModel)
-        if size:
-            query = query.where(CarDbModel.size == size)
-        if doors:
-            query = query.where(CarDbModel.doors == doors)
+    query = select(CarDbModel)
+    if size:
+        query = query.where(CarDbModel.size == size)
+    if doors:
+        query = query.where(CarDbModel.doors == doors)
 
-        result = session.exec(query).all()
+    result = session.exec(query).all()
 
-        if result:
-            return result
-        else:
-            raise HTTPException(status_code=404, detail=f"No car with size={size} and doors={doors}.")
+    if result:
+        return result
+    else:
+        raise HTTPException(status_code=404, detail=f"No car with size={size} and doors={doors}.")
 
 
 @app.get("/api/cars/{id}")
-def get_car_by_id(id: int)->CarOutput:
+def get_car_by_id(id: int, session: Session = Depends(get_session))->CarOutput:
     """Returns a car matching the provided 'id' from the server records"""
-    with Session(engine) as session:
-        car = session.get(CarDbModel, id)
-        if car:
-            return car
-        else:
-            raise HTTPException(status_code=404, detail=f"No car with id {id} found on the server.")
+    car = session.get(CarDbModel, id)
+    if car:
+        return car
+    else:
+        raise HTTPException(status_code=404, detail=f"No car with id {id} found on the server.")
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
@@ -81,36 +83,34 @@ async def favicon():
     return FileResponse(path)
 
 @app.post("/api/cars", response_model=CarOutput)
-def add_car(car: CarInput) -> CarOutput:
-    with Session(engine) as session:
-        new_car = CarDbModel.model_validate(car)
-        session.add(new_car)
-        session.commit()
-        session.refresh(new_car)
+def add_car(car: CarInput, session: Session = Depends(get_session)) -> CarOutput:
+    new_car = CarDbModel.model_validate(car)
+    session.add(new_car)
+    session.commit()
+    session.refresh(new_car)
     return new_car
 
 
 @app.delete("/api/cars/{id}", status_code=204)
-def remove_car(id: int) -> None:
-    matches = [car for car in db if car.id == id]
-    if matches:
-        car = matches[0]
-        db.remove(car)
-        save_lib(db)
+def remove_car(id: int, session: Session = Depends(get_session)) -> None:
+    car = session.get(CarDbModel, id)
+    if car:
+        session.delete(car)
+        session.commit()
     else:
         raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
 
 ## Modify the preexisting object of a Car, by id
 @app.put("/api/cars/{id}", response_model=CarOutput)
-def change_car(id: int, new_data: CarInput) -> CarOutput:
-    matches = [car for car in db if car.id == id]
-    if matches:
-        car = matches[0]
+def change_car(id: int, new_data: CarInput, session: Session = Depends(get_session)) -> CarOutput:
+    car = session.get(CarDbModel, id)
+    if car:
         car.fuel = new_data.fuel
         car.size = new_data.size
         car.doors = new_data.doors
         car.transmission = new_data.transmission
-        save_lib(db)
+
+        session.commit()
         return car
     else:
         raise HTTPException(status_code=404, detail=f"No car with id={id}.")
@@ -131,7 +131,7 @@ def add_trip(car_id: int, trip: TripInput) -> TripOutput:
         raise HTTPException(status_code=404, detail=f"No car with id {id} found.")
 
 @app.delete("/api/cars/{car_id}/trips/{trip_id}", status_code=204)
-def remove_car(car_id: int, trip_id:int) -> None:
+def remove_trip(car_id: int, trip_id:int) -> None:
     for car in db:
         if car.id == car_id:
             for trip in car.trips:
@@ -146,12 +146,11 @@ def remove_car(car_id: int, trip_id:int) -> None:
 ## Migrate the data from the json file to the Database ########################
 
 @app.post("/api/cars/migrate")
-def migrate_data_to_db() -> list[CarOutput]:
-    with Session(engine) as session:
-        for car in db:
-            new_car = CarDbModel.model_validate(car)
-            session.add(new_car)
-        session.commit()
+def migrate_data_to_db(session: Session = Depends(get_session)) -> list[CarOutput]:
+    for car in db:
+        new_car = CarDbModel.model_validate(car)
+        session.add(new_car)
+    session.commit()
     return db
 
 
