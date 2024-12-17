@@ -80,7 +80,14 @@
 * [Pytest site](https://docs.pytest.org/en/stable/index.html)
     * [How to use unittest-based tests with pytest](https://docs.pytest.org/en/stable/how-to/unittest.html)
 * [Pydantic](https://docs.pydantic.dev/latest/)
+* [Simple OAuth2 using bearers and tokens](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/)
+* [OAuth2 Scopes](https://fastapi.tiangolo.com/advanced/security/oauth2-scopes/)
 
 ## Operational
 * [Training Feedback](https://forms.gle/P1t12HHh1LSehpft9)
 * [Mid-session Test](https://forms.gle/VViqBhZsN2bxtSqA6)
+* [Post-session Test](https://forms.gle/jVRmBH6PpjiZ3CkC7)
+
+
+## Contact
+* ramakant.s.debata@gmail.com
